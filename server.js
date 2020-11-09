@@ -19,7 +19,10 @@ const getNew = (url, now, image, res) => {
     .then(resp => resp.buffer())
     .then(buffer => {
       Jimp.read(buffer).then(img => img.crop(340, 280, 800, 400, (err, img) => {
-      img.rotate(-2.5, (err, img) => img.getBufferAsync('image/jpeg')
+      img.rotate(-2.5, (err, img) => 
+      Jimp.loadFont(Jimp.FONT_SANS_16_BLACK).then(font =>
+      img.print(font, 20, 2, now, (err, img) =>
+      img.getBufferAsync('image/jpeg')
       .then(data => {
         image.date = now; 
         image.changed = now; 
@@ -28,7 +31,7 @@ const getNew = (url, now, image, res) => {
         res.setHeader("Content-Type", 'image/jpeg');
         res.setHeader("Content-Date", image.changed);
         res.send(image.image);
-      }))}))})
+      }))))}))})
       .catch(error => {
         console.error(error);
 
