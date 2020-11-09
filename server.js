@@ -18,7 +18,6 @@ const getNew = (url, now, image, res) => {
   return fetch(url)
     .then(resp => resp.buffer())
     .then(buffer => {
-      console.log(buffer.length);
       Jimp.read(buffer).then(img => img.crop(340, 280, 800, 400, (err, img) => {
       img.rotate(-2.5, (err, img) => img.getBufferAsync('image/jpeg')
       .then(data => {
@@ -31,7 +30,7 @@ const getNew = (url, now, image, res) => {
         res.send(image.image);
       }))}))})
       .catch(error => {
-        console.log(error);
+        console.error(error);
 
         if (image.image) {
           image.date = now; 
