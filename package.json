@@ -1,0 +1,48 @@
+{
+  "name": "pocasi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "go": "node server.js",
+    "build": "webpack --mode development",
+    "dev": "start nodemon server.js && start webpack -w --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tom-gregorovic/pocasi.git"
+  },
+  "keywords": [],
+  "author": "Tom Gregorovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tom-gregorovic/pocasi/issues"
+  },
+  "homepage": "https://copocasi.herokuapp.com",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jimp": "^0.16.1",
+    "leaflet": "^1.7.1",
+    "node-fetch": "^2.6.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "sunrise-sunset-js": "^2.1.2",
+    "whatwg-fetch": "^3.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
+    "nodemon": "^2.0.6",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev": "^1.1.1"
+  },
+  "engines": {
+    "node": "8.12.0"
+  }
+}
