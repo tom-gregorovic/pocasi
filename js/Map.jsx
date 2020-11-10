@@ -57,8 +57,8 @@ const Map = (props) => {
   useEffect(() => {
     if (map) {
       const coords = [[51.3, 11.7], [47.3, 23]];
-      const lVisIr = L.imageOverlay("/api/vis-ir", coords, { opacity: 0.8 });
-      const l24h = L.imageOverlay("/api/24h", coords, { opacity: 0.8 });
+      const lVisIr = L.imageOverlay("/api/vis-ir", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
+      const l24h = L.imageOverlay("/api/24h", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
 
       const sunrise = getSunrise(config.params.center[0], config.params.center[1]);
       const sunset = getSunset(config.params.center[0], config.params.center[1]);
@@ -69,7 +69,7 @@ const Map = (props) => {
 
       map.addLayer((time >= sunriseTime && time <= sunsetTime) ? lVisIr : l24h);
 
-      L.control.layers(null, { "vis-ir": lVisIr, "24h": l24h }).addTo(map);
+      L.control.layers(null, { "oblačnost (vis-ir)": lVisIr, "oblačnost (24h)": l24h }).addTo(map);
     }
   }, [map]);
 
