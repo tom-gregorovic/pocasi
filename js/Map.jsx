@@ -27,6 +27,7 @@ const config = {
 const Map = (props) => {
 
   const [map, setMap] = useState();
+  const [cams, setCams] = useState();
 
   const initMap = () => {
     const m = L.map("map", config.params);
@@ -55,11 +56,22 @@ const Map = (props) => {
   }, []);
 
   useEffect(() => {
-    if (map) {
-      const coords = [[51.3, 11.7], [47.3, 23]];
-      const lVisIr = L.imageOverlay("/api/vis-ir", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
-      const l24h = L.imageOverlay("/api/24h", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
+    fetch("/api/cams")
+    .then(resp => resp.json())
+    .then(data => {
+      setCams(data)
+    });
+  }, []);
 
+  useEffect(() => {
+    if (map && cams) {
+      const coords = [[51.3, 11.7], [47.3, 23]];
+      const coordsSnow = [[51.06, 12.05], [48.5, 18.9]];
+      const lVisIr = L.imageOverlay("/api/clouds/vis-ir", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
+      const l24h = L.imageOverlay("/api/clouds/24h", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
+      const lSnow = L.imageOverlay("/api/snow", coordsSnow, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ" });
+      const lCams = L.layerGroup();
+      
       const sunrise = getSunrise(config.params.center[0], config.params.center[1]);
       const sunset = getSunset(config.params.center[0], config.params.center[1]);
 
@@ -68,10 +80,22 @@ const Map = (props) => {
       const sunsetTime = (sunset.getUTCHours() - 1) * 60 + sunset.getUTCMinutes();
 
       map.addLayer((time >= sunriseTime && time <= sunsetTime) ? lVisIr : l24h);
+      map.addLayer(lCams);
 
-      L.control.layers(null, { "oblačnost (vis-ir)": lVisIr, "oblačnost (24h)": l24h }).addTo(map);
+      L.control.layers(null, { 
+        "oblačnost (vis-ir)": lVisIr, 
+        "oblačnost (24h)": l24h, 
+        "sníh": lSnow, 
+        "kamery": lCams }).addTo(map);
+
+      if (cams) {
+        cams.forEach(cam => {
+          const marker = L.marker(cam.coords, { icon: L.divIcon({ html: "📷",  }) }).addTo(lCams);
+          marker.bindPopup(`<a href="${cam.page}">${cam.name}<br/><img src="/api/cams/${cam.id}"/></a>`);
+        });
+      }
     }
-  }, [map]);
+  }, [map, cams]);
 
   return (
     <div id="map"/>
