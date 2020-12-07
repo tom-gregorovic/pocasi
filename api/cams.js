@@ -40,6 +40,7 @@ const cams = [
 
 const camsData = [];
 
+
 const updatePreview = (cam) => {  
   return ((cam.preview || cam.img) ? fetch(cam.preview || cam.img).then(resp => resp.buffer()) 
     : captureWebsite.buffer(cam.page, cam.pageOptions))
