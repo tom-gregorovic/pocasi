@@ -1,7 +1,6 @@
 const express = require("express");
 const fetch = require('node-fetch');
 const Jimp = require('jimp');
-const captureWebsite = require('capture-website');
 
 const router = express.Router();
 
@@ -27,14 +26,15 @@ const cams = [
   },
   { id: 102, name: "Velká Javořina", dir: "JV", coords: [48.8574139, 17.6819269, 900], 
     page: 'http://myjava.dohlad.info/kamera/128/holubyho-chata-pred-chatou',
-    pageOptions: { type: "jpeg", width: 200, height: 150, removeElements: ["#header", ".menu", "#mini_imgs"], fullPage: true, scaleFactor: 1 }
+    getImg: (src) => "http://myjava.dohlad.info" + [...src.matchAll(/<img src="(.*)" id="detailImg" \/>/g)][0][1]
   },
   { id: 103, name: "Pálava - Nové Mlýny", dir: "Z", coords: [48.8727572, 16.7250322, 175], 
     page: 'https://www.webcamlive.cz/web-kamera-chko-palava-172-36',
-    pageOptions: { type: "jpeg", width: 200, height: 150, 
-      removeElements: ["#header", ".col_1", ".col_2", ".googleBottom", "#footer", "h2", ".regionWide", ".supRegsLinks",
-        "p", ".supregs", "iframe", ".mapbutton"], fullPage: true, scaleFactor: 1 },
-    pageCrop: {x: 0, y: 0, w: 500, h: 300},
+    getImg: (src) => "https://www.webcamlive.cz/" + [...src.matchAll(/<img src="(outputCache.*)" alt="CHKO Pálava/g)][0][1]
+    
+    
+    //<img src="outputCache/archiv_clear__172_2020_20201207161505_386.jpg_maxSize445_squarefalse_bgColorFFFFFF_width0_height0_tagtrue_fontSize10_barHeight18.jpg" alt="CHKO Pálava
+    
   },
 ];
 
@@ -42,8 +42,11 @@ const camsData = [];
 
 
 const updatePreview = (cam) => {  
-  return ((cam.preview || cam.img) ? fetch(cam.preview || cam.img).then(resp => resp.buffer()) 
-    : captureWebsite.buffer(cam.page, cam.pageOptions))
+  return ((cam.preview || cam.img) ? fetch(cam.preview || cam.img) 
+    : fetch(cam.page).then(res => res.text()).then(src => {
+      const url = cam.getImg(src);
+      return fetch(url) }))
+    .then(resp => resp.buffer())
     .then(buffer => {
       if (!cam.pageCrop) {
         return buffer;

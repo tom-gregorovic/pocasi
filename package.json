@@ -20,7 +20,6 @@
   },
   "homepage": "https://copocasi.herokuapp.com",
   "dependencies": {
-    "capture-website": "^1.2.6",
     "express": "^4.17.1",
     "jimp": "^0.16.1",
     "leaflet": "^1.7.1",
