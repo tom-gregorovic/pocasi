@@ -20,6 +20,22 @@ const cams = [
     img: `http://46.149.124.196/webcam/radnice.jpg`,
     page: `https://www.tisnov.cz/mesto/mesto/web-kamera`
   },
+  { id: 104, name: "Olešnice", dir: "V", coords: [49.5565986, 16.4046589, 650], 
+    img: `https://www.olesnice.cz/sites/all/modules/olesnice_webcam/olesnice_webcam_img.php?location=zavrsi`,
+    page: `https://www.ski-areal.cz/cz/webkamery`
+  },
+  { id: 105, name: "Oslavany", dir: "Z", coords: [49.1262922, 16.3414272, 280], 
+    img: `https://www.oslavany.net/images/cam/vodarna000M.jpg`,
+    page: `https://www.oslavany.net/aktualne/`
+  },
+  { id: 106, name: "Nedvědice", dir: "Z", coords: [49.4563561, 16.3375856, 325], 
+    img: `https://cam01.pernstejn.net/axis-cgi/jpg/image.cgi?resolution=200x150`,
+    page: `https://www.nedvedice.cz/modules.php?name=WebCam`
+  },
+  { id: 107, name: "Kořenec", dir: "Z", coords: [49.5294150, 16.7649250, 660], 
+    img: `https://www.korenec-golf.cz/kamera/kamera_PE.jpg`,
+    page: `https://www.lyzarsketrasy.cz/cz/m/kamery/`
+  },
   { id: 101, name: "Adamov", dir: "JV", coords: [49.3022919, 16.6562461, 320], 
     img: `https://adamov.realhost.cz/img/webcam/koupaliste.jpg`,
     page: `https://www.adamov.cz/rychle-odkazy/webkamery`
@@ -30,7 +46,7 @@ const cams = [
   },
   { id: 103, name: "Pálava - Nové Mlýny", dir: "Z", coords: [48.8727572, 16.7250322, 175], 
     page: 'https://www.webcamlive.cz/web-kamera-chko-palava-172-36',
-    getImg: (src) => "https://www.webcamlive.cz/" + [...src.matchAll(/<img src="(outputCache.*)" alt="CHKO Pálava/g)][0][1]
+    getImg: (src) => "https://www.webcamlive.cz/" + [...src.matchAll(/<img src="(.*)" alt="CHKO Pálava/g)][0][1]
     
     
     //<img src="outputCache/archiv_clear__172_2020_20201207161505_386.jpg_maxSize445_squarefalse_bgColorFFFFFF_width0_height0_tagtrue_fontSize10_barHeight18.jpg" alt="CHKO Pálava

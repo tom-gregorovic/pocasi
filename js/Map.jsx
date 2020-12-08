@@ -91,7 +91,7 @@ const Map = (props) => {
       if (cams) {
         cams.forEach(cam => {
           const marker = L.marker(cam.coords, { icon: L.divIcon({ html: "📷",  }) }).addTo(lCams);
-          marker.bindPopup(`<a href="${cam.page}">${cam.name}<br/><img src="/api/cams/${cam.id}"/></a>`);
+          marker.bindPopup(`<a href="${cam.page}" target="_blank">${cam.name}<br/><img src="/api/cams/${cam.id}"/></a>`);
         });
       }
     }
