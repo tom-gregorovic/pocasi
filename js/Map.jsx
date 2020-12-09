@@ -67,8 +67,11 @@ const Map = (props) => {
     if (map && cams) {
       const coords = [[51.3, 11.7], [47.3, 23]];
       const coordsSnow = [[51.06, 12.05], [48.5, 18.9]];
+      const coordsAladin = [[51.12, 11.99], [48.38, 19.08]];
       const lVisIr = L.imageOverlay("/api/clouds/vis-ir", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
       const l24h = L.imageOverlay("/api/clouds/24h", coords, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ & EUMETSAT" });
+      const lAladin12 = L.imageOverlay("/api/clouds/aladin/12", coordsAladin, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ" });
+      const lAladin15 = L.imageOverlay("/api/clouds/aladin/15", coordsAladin, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ" });
       const lSnow = L.imageOverlay("/api/snow", coordsSnow, { opacity: 0.8, attribution: "(c) 2007-2019 ČHMÚ" });
       const lCams = L.layerGroup();
       
@@ -85,13 +88,28 @@ const Map = (props) => {
       L.control.layers(null, { 
         "oblačnost (vis-ir)": lVisIr, 
         "oblačnost (24h)": l24h, 
+        "oblačnost Aladin (zítra 12 UTC)": lAladin12, 
+        "oblačnost Aladin (zítra 15 UTC)": lAladin15, 
         "sníh": lSnow, 
         "kamery": lCams }).addTo(map);
 
       if (cams) {
+        const markers = []; 
         cams.forEach(cam => {
+          const m = markers.find(i => i.coords.slice(0, 2).join(",") == cam.coords.slice(0, 2).join(","));
+
+          const popup = `<a href="${cam.page}" target="_blank">${cam.name} ${cam.dir} ${cam.coords[2]} m<br/><img src="/api/cams/${cam.id}"/></a>`;
+
+          if (m) {
+            m.popups.push(popup);
+          } else {
+            markers.push({ coords: cam.coords, popups: [popup]});
+          }
+        });
+
+        markers.forEach(cam => {
           const marker = L.marker(cam.coords, { icon: L.divIcon({ html: "📷",  }) }).addTo(lCams);
-          marker.bindPopup(`<a href="${cam.page}" target="_blank">${cam.name}<br/><img src="/api/cams/${cam.id}"/></a>`);
+          marker.bindPopup(cam.popups.join("<br/>"));
         });
       }
     }

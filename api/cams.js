@@ -11,8 +11,8 @@ const chmi = (name) => { return {
 
 const cams = [
   { id: 1, name: "Maruška", dir: "V", coords: [49.3656953, 17.8278367, 664], ...chmi("maruska")},
-  { id: 2, name: "Lysá Hora JZ", dir: "JZ", coords: [49.5461503, 18.4476114, 1322], ...chmi("lysa_hora3")},
-  { id: 3, name: "Lysá Hora JV", dir: "JV", coords: [49.5461503, 18.4476114, 1322], ...chmi("lysa_hora2")},
+  { id: 2, name: "Lysá Hora", dir: "JZ", coords: [49.5461503, 18.4476114, 1322], ...chmi("lysa_hora3")},
+  { id: 3, name: "Lysá Hora", dir: "JV", coords: [49.5461503, 18.4476114, 1322], ...chmi("lysa_hora2")},
   { id: 4, name: "Šerák", dir: "SV", coords: [50.1876511, 17.1084386, 1328], ...chmi("serak")},
   { id: 5, name: "Rýmařov", dir: "SZ", coords: [49.9320617, 17.2732753, 578], ...chmi("rymarov")},
 
@@ -35,6 +35,22 @@ const cams = [
   { id: 107, name: "Kořenec", dir: "Z", coords: [49.5294150, 16.7649250, 660], 
     img: `https://www.korenec-golf.cz/kamera/kamera_PE.jpg`,
     page: `https://www.lyzarsketrasy.cz/cz/m/kamery/`
+  },
+  { id: 108, name: "Tři Studně", dir: "V", coords: [49.6141394, 16.0345572, 730], 
+    img: `https://tristudne.cz/Webcam/Last`,
+    page: `https://tristudne.cz/cz/webkamera`
+  },
+  { id: 109, name: "Nové Město na Moravě", dir: "SZ", coords: [49.5606614, 16.0727178, 590], 
+    img: `https://ic.nmnm.cz/data/pocasi/zasranec04.png`,
+    page: `https://ic.nmnm.cz/data/pocasi/K1155270.php`
+  },
+  { id: 110, name: "Suchý vrch", dir: "SZ", coords: [50.0509347, 16.6933653, 995], 
+    img: `https://kamery.ttnet.cz/images/sv2.jpg`,
+    page: `https://kamery.ttnet.cz/index.php?kamera=sv2`
+  },
+  { id: 111, name: "Bystřice nad Pernštejnem", dir: "Z", coords: [49.5190961, 16.2502922, 540], 
+    img: `https://www.bystricenp.cz/webcam/bnp/luz.jpg`,
+    page: `https://www.bystricenp.cz/luzanky-kamera`
   },
   { id: 101, name: "Adamov", dir: "JV", coords: [49.3022919, 16.6562461, 320], 
     img: `https://adamov.realhost.cz/img/webcam/koupaliste.jpg`,
