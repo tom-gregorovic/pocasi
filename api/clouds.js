@@ -112,8 +112,8 @@ router.get('/vis-ir', (req, res) => {
 router.get('/aladin/:hours', (req, res) => {
   const n = new Date();
   const dateAladin = new Date(new Date(n.getFullYear(), n.getMonth(), n.getDate(),
-    Math.floor(n.getHours() / 6) * 6) - 6 * 60 * 60 * 1000);
-  const dateTarget = new Date(new Date(n.getFullYear(), n.getMonth(), n.getDate(), req.params.hours) 
+    Math.floor(n.getHours() / 6) * 6).valueOf() - 6 * 60 * 60 * 1000);
+  const dateTarget = new Date(new Date(n.getFullYear(), n.getMonth(), n.getDate(), req.params.hours).valueOf() 
     + 24 * 60 * 60 * 1000);
   const now = `${dateAladin.getFullYear()}${("0" + (dateAladin.getMonth() + 1)).slice(-2)}${("0" + dateAladin.getDate()).slice(-2)}${("0" + dateAladin.getHours()).slice(-2)}`;
   const h = ("0" + Math.round((dateTarget - dateAladin) / (60 * 60 * 1000))).slice(-2);
